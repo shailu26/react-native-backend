@@ -3,16 +3,14 @@ const crypto = require("crypto");
 const ALGO = "sha256";
 const AWS = require("aws-sdk");
 const dotenv = require("dotenv");
-const env = dotenv.config({
-  path: require("find-config")("server/.env")
-});
+dotenv.config();
 const fs = require('fs');
 const genralFunctions = require('../../helpers/generalFunctions');
 
 const s3 = new AWS.S3({
-  accessKeyId: env.parsed.ACCESS_KEY,
-  secretAccessKey: env.parsed.SECRET_KEY,
-  region: env.S3REGION
+  accessKeyId: process.env.ACCESS_KEY,
+  secretAccessKey: process.env.SECRET_KEY,
+  region: process.env.S3REGION
 });
 
 const getSignedUrl = params => {
