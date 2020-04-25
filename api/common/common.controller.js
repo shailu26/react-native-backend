@@ -97,7 +97,7 @@ module.exports = {
         });
         delete global[globalVarKey];
         if (!err) {
-          let s3Url = 'https://' + params.Bucket + 's3-' + region + '.amazonaws.com/'  + params.Key;
+          let s3Url = 'https://' + params.Bucket + '.' + 's3-' + region + '.amazonaws.com/'  + params.Key;
           console.log(s3Url);
           let fileObj = await genralFunctions.saveFileSchema({
             fileName: file.originalname,
