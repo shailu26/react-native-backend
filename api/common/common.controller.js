@@ -71,6 +71,7 @@ module.exports = {
     }
   },
   uploadVideo: (req, res) => {
+    console.log('step 1');
     const file = req.file;
     const otherDetails = JSON.parse(req.body.otherDetails);
     const readStream = fs.createReadStream(file.path)
@@ -82,7 +83,7 @@ module.exports = {
       ContentType: file.mimetype,
       ACL: "public-read"
     };
-
+    console.log('step 2');
     let s3Request = s3.putObject(s3params, async function (err, data) {
         console.log({
           err,
@@ -97,7 +98,7 @@ module.exports = {
         });
         delete global[globalVarKey];
         if (!err) {
-          let s3Url = 'https://' + params.Bucket + '.' + 's3-' + region + '.amazonaws.com/'  + params.Key;
+          let s3Url = 'https://' + params.Bucket + '.' + 's3.amazonaws.com/'  + params.Key;
           console.log(s3Url);
           let fileObj = await genralFunctions.saveFileSchema({
             fileName: file.originalname,
@@ -119,6 +120,7 @@ module.exports = {
       });
     // setting request to global object so when user want to abort upload then he/she can abort it
     global[globalVarKey] = s3Request;
+    console.log('final step');
     res.json({
       success: true
     });

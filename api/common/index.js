@@ -7,10 +7,12 @@ const multer = require('multer');
 // And Multer adds a body object and a file or files object to the request object. The body object contains the values of the text fields of the form, the file or files object contains the files uploaded via the form.
 var storage = multer.diskStorage({ // notice you are calling the multer.diskStorage() method here, not multer()
     destination: function(req, file, cb) {
+        console.log('in destination common index.js');
         cb(null, 'uploads/')
     },
     filename: function(req, file, cb) {
         const otherDetails = JSON.parse(req.body.otherDetails);
+        console.log('file name');
         cb(null, file.fieldname + '-' + Date.now() + `.${otherDetails.contentType}`)
     }
 });
