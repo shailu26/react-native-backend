@@ -97,14 +97,14 @@ module.exports = {
         });
         delete global[globalVarKey];
         if (!err) {
-          let s3Url = 'https://s3-' + region + '.amazonaws.com/' + params.Bucket + '/' + params.Key;
-          console.log('https://s3-' + region + '.amazonaws.com/' + params.Bucket + '/' + params.Key);
-          let file = await genralFunctions.saveFileSchema({
+          let s3Url = 'https://' + params.Bucket + 's3-' + region + '.amazonaws.com/'  + params.Key;
+          console.log(s3Url);
+          let fileObj = await genralFunctions.saveFileSchema({
             fileName: file.originalname,
             s3Url,
             user: otherDetails.userId
           })
-          console.log('file schema saved', file);
+          console.log('file schema saved', fileObj);
         } else {
           otherDetails.isVideoFailed = true;
           req.app.get('socket').emit(`uploadStatusSuccess_${1}`, otherDetails)

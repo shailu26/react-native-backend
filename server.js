@@ -23,11 +23,10 @@ process.on('SIGINT', function() {
     process.exit();
     });
 })
-const port = 1004;
+const port = 3000;
 const server = app.listen(port,()=>{
     console.log(`server is running on ${port}`);
     let socket = new SocketClass(server, app);
-
 })
 
 module.exports = server
