@@ -12,7 +12,7 @@ var storage = multer.diskStorage({ // notice you are calling the multer.diskStor
     },
     filename: function(req, file, cb) {
         const otherDetails = JSON.parse(req.body.otherDetails);
-        console.log('file name');
+        console.log('file name', file.fieldname + '-' + Date.now() + `.${otherDetails.contentType}`);
         cb(null, file.fieldname + '-' + Date.now() + `.${otherDetails.contentType}`)
     }
 });

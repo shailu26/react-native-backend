@@ -71,7 +71,6 @@ module.exports = {
     }
   },
   uploadVideo: (req, res) => {
-    console.log('step 1');
     const file = req.file;
     const otherDetails = JSON.parse(req.body.otherDetails);
     const readStream = fs.createReadStream(file.path)
@@ -83,7 +82,6 @@ module.exports = {
       ContentType: file.mimetype,
       ACL: "public-read"
     };
-    console.log('step 2');
     let s3Request = s3.putObject(s3params, async function (err, data) {
         console.log({
           err,

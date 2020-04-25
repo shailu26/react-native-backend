@@ -7,7 +7,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const init = require('./routes/routes').init;
 const passport = require('passport');
- 
+const timeout = require('connect-timeout');
 app.use(cookieParser());
 app.use(cors(), function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", true);
@@ -29,7 +29,8 @@ app.use(bodyParser.urlencoded({
 app.use(session({ secret: 'appveil7867'}));
 app.use(passport.initialize());
 app.use(passport.session());
- 
+app.use(timeout('120s'));
+
 // Passport session setup, Passport needs to serialize and deserialize user instances from a session store to support login sessions. 
 passport.serializeUser(function(user, done) {
 done(null, user);
@@ -46,6 +47,14 @@ init(app);
 
 app.get('/hello', (req, res) => {
     res.send('Hello');
+});
+
+app.use(function(req, res, next){
+    res.setTimeout(240000, function(){ // 2 minute timeout adjust for larger uploads
+    console.log('Request has timed out.');
+    res.send(408);
+  });
+  next();
 });
 
 module.exports = app
