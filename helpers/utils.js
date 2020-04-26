@@ -9,7 +9,7 @@ dotenv.config({path:__dirname+'/.env'});
 function verifyAuth(req, res, next) {
     const token = req.headers.authorization.split(' ')[1]; // Bearer <token>
     const options = {
-        expiresIn: '2d',
+        expiresIn: '15d',
     };
     try {
         // verify makes sure that the token hasn't expired
@@ -83,7 +83,7 @@ module.exports = {
                                 name: user.name
                             };
                             const options = {
-                                expiresIn: '2d'
+                                expiresIn: '15d'
                             };
                             const secret = process.env.JWT_SECRET;
                             const token = jwt.sign(payload, secret, options);
@@ -204,5 +204,12 @@ module.exports = {
         }, {
             password
         }).exec();
-    }
+    },
+    extendTimeout: (req, res, next) => {
+        res.setTimeout(480000, function () {
+        /* Handle timeout */
+        console.log('req timeout')
+        });
+        next();
+      }
 };

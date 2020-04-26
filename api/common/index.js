@@ -19,8 +19,8 @@ var storage = multer.diskStorage({ // notice you are calling the multer.diskStor
 var upload = multer({ storage: storage });
 
 
-router.post('/getPresignedUrl', commonController.getPresignedUrl);
-router.post('/uploadVideo', upload.single('file'), commonController.uploadVideo);
-router.post('/abortVideoUpload', commonController.abortVideoUpload);
+router.post('/getPresignedUrl', utils.validateToken, commonController.getPresignedUrl);
+router.post('/uploadVideo',utils.validateToken, utils.extendTimeout, upload.single('file'), commonController.uploadVideo);
+router.post('/abortVideoUpload',utils.validateToken, commonController.abortVideoUpload);
 
 module.exports = router;
