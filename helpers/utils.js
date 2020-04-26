@@ -180,7 +180,7 @@ module.exports = {
             _id
         }, {
             password: 0
-        }).populate('payments').exec();
+        }).populate('files').exec();
     },
     updateUserById: (userId, reqBody) => {
         return User.update({
